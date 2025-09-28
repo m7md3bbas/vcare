@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "563120499749",
+    "project_id": "docapp-1dfac",
+    "storage_bucket": "docapp-1dfac.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:563120499749:android:bb3a5a9fe6d84d4e9c63cc",
+        "android_client_info": {
+          "package_name": "com.example.vcare"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0Sbf1QBTCGPuUfJkvlKH4aG3HlbT5RO0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
