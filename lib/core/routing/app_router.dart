@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vcare/core/routing/routing_names.dart';
 import 'package:vcare/features/home/view/home_screen.dart';
+import 'package:vcare/features/login/view/login_screen.dart';
 import 'package:vcare/features/onboarding/view/onboarding_screen.dart';
 
 class AppRouter {
@@ -10,6 +11,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const HomeScreen());
       case RoutingNames.onBoarding:
         return MaterialPageRoute(builder: (_) => const OnboardingScreen());
+      case RoutingNames.login:
+        return MaterialPageRoute(builder: (_) => const LoginScreen());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
