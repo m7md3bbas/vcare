@@ -14,7 +14,7 @@ class LogoWithText extends StatelessWidget {
       children: [
         SvgPicture.asset(ImageDir.logo, height: 38.h, width: 38.w),
         SizedBox(width: 10.w),
-        Text("DOCDOC", style: TextStyles.font24Black700Weight),
+        Text("DOCDOC", style: TextStyles.font24Blackbold),
       ],
     );
   }
