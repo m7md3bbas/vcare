@@ -15,10 +15,20 @@ class TextStyles {
     fontSize: 32.sp,
     fontWeight: FontWeightHelper.bold,
   );
-  static TextStyle font30DarkBlueRegular = TextStyle(
+  static TextStyle font13DarkBlueRegular = TextStyle(
     color: ColorsManager.darkBlue,
-    fontSize: 30.sp,
+    fontSize: 13.sp,
     fontWeight: FontWeightHelper.regular,
+  );
+  static TextStyle font15DarkBlueMeduim = TextStyle(
+    color: ColorsManager.darkBlue,
+    fontSize: 15.sp,
+    fontWeight: FontWeightHelper.medium,
+  );
+  static TextStyle font14BlueSemiBold = TextStyle(
+    color: ColorsManager.mainBlue,
+    fontSize: 14.sp,
+    fontWeight: FontWeightHelper.semiBold,
   );
   static TextStyle font24BlueBold = TextStyle(
     color: ColorsManager.mainBlue,
