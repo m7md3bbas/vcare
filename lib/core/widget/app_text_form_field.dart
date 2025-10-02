@@ -10,9 +10,15 @@ class AppTextFormField extends StatelessWidget {
   final EdgeInsetsGeometry? contentPadding;
   final InputBorder? focusedBorder;
   final InputBorder? enabledBorder;
+  final InputBorder? errorBorder;
+  final InputBorder? focusedErrorBorder;
   final TextStyle? hintStyle;
   final Color? backgroundColor;
+  final TextEditingController? controller;
+  final Function(String?) validator;
+  final TextInputType? keyboardType;
   const AppTextFormField({
+    this.keyboardType,
     super.key,
     required this.hintText,
     this.suffuixIcon,
@@ -22,10 +28,16 @@ class AppTextFormField extends StatelessWidget {
     this.enabledBorder,
     this.hintStyle,
     this.backgroundColor,
+    this.controller,
+    required this.validator,
+    this.errorBorder,
+    this.focusedErrorBorder,
   });
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      keyboardType: keyboardType,
+      controller: controller,
       decoration: InputDecoration(
         isDense: true,
         contentPadding:
@@ -49,6 +61,18 @@ class AppTextFormField extends StatelessWidget {
                 width: 1.3.w,
               ),
             ),
+        errorBorder:
+            errorBorder ??
+            OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16.r),
+              borderSide: BorderSide(color: Colors.red, width: 1.3.w),
+            ),
+        focusedErrorBorder:
+            focusedErrorBorder ??
+            OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16.r),
+              borderSide: BorderSide(color: Colors.red, width: 1.3.w),
+            ),
         fillColor: backgroundColor ?? ColorsManager.moreLighterGery,
         filled: true,
         hintStyle: hintStyle ?? TextStyles.font14GreyRegular,
@@ -56,6 +80,7 @@ class AppTextFormField extends StatelessWidget {
         suffixIcon: suffuixIcon ?? suffuixIcon,
       ),
       obscureText: obscureText ?? false,
+      validator: (value) => validator(value),
     );
   }
 }

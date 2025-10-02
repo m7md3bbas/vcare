@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:vcare/core/theming/colors_manager.dart';
 
 class AppTextButton extends StatelessWidget {
   final String text;

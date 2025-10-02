@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vcare/core/theming/colors_manager.dart';
 import 'package:vcare/core/theming/text_styles.dart';
 import 'package:vcare/core/widget/already_have_account.dart';
 import 'package:vcare/core/widget/app_text_button.dart';
-import 'package:vcare/core/widget/app_text_form_field.dart';
 import 'package:vcare/core/widget/terms_and_conditions.dart';
+import 'package:vcare/features/login/data/model/login_request_body.dart';
+import 'package:vcare/features/login/logic/cubit/login_cubit.dart';
+import 'package:vcare/features/login/view/widget/email_and_password.dart';
+import 'package:vcare/features/login/view/widget/login_bloc_listener.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -15,9 +19,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _formKey = GlobalKey<FormState>();
-  var isObsecure = true;
-  final AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
+  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,49 +38,31 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: TextStyles.font14GreyRegular,
                 ),
                 SizedBox(height: 36.h),
-                Form(
-                  key: _formKey,
-                  autovalidateMode: _autovalidateMode,
-                  child: Column(
-                    children: [
-                      AppTextFormField(hintText: "Email"),
-                      SizedBox(height: 18.h),
-                      AppTextFormField(
-                        hintText: "Password",
-                        obscureText: isObsecure,
-                        suffuixIcon: GestureDetector(
-                          child: Icon(
-                            isObsecure
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                          ),
-                          onTap: () {
-                            setState(() {
-                              isObsecure = !isObsecure;
-                            });
-                          },
-                        ),
+
+                Column(
+                  children: [
+                    EmailAndPassword(autovalidateMode: autovalidateMode),
+
+                    SizedBox(height: 24.h),
+                    Align(
+                      alignment: AlignmentDirectional.centerEnd,
+                      child: Text(
+                        "Forgot Password?",
+                        style: TextStyles.font13blueRegular,
                       ),
-                      SizedBox(height: 24.h),
-                      Align(
-                        alignment: AlignmentDirectional.centerEnd,
-                        child: Text(
-                          "Forgot Password?",
-                          style: TextStyles.font13blueRegular,
-                        ),
-                      ),
-                      SizedBox(height: 24.h),
-                      AppTextButton(
-                        text: "Login",
-                        onPress: () {},
-                        backgroundColor: ColorsManager.mainBlue,
-                      ),
-                      SizedBox(height: 24.h),
-                      const TermsAndConditions(),
-                      SizedBox(height: 60.h),
-                      const AlreadyHaveAccount(),
-                    ],
-                  ),
+                    ),
+                    SizedBox(height: 24.h),
+                    AppTextButton(
+                      text: "Login",
+                      onPress: () => validateThenDoLogin(context),
+                      backgroundColor: ColorsManager.mainBlue,
+                    ),
+                    SizedBox(height: 24.h),
+                    const TermsAndConditions(),
+                    SizedBox(height: 60.h),
+                    const AlreadyHaveAccount(),
+                    LoginBlocListener(),
+                  ],
                 ),
               ],
             ),
@@ -85,5 +70,21 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  void validateThenDoLogin(BuildContext context) {
+    final loginCubit = context.read<LoginCubit>();
+    if (loginCubit.formKey.currentState!.validate()) {
+      loginCubit.emitloginStates(
+        LoginRequestBody(
+          email: loginCubit.emailController.text,
+          password: loginCubit.passwordController.text,
+        ),
+      );
+    } else {
+      setState(() {
+        autovalidateMode = AutovalidateMode.always;
+      });
+    }
   }
 }
